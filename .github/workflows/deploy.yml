@@ -1,19 +1,17 @@
 name: Deploy release to server
 
 permissions:
-  id-token: write
   contents: read
-  checks: write
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   deploy-release:
   
     runs-on: ubuntu-latest
-    environment: master
+    environment: main
     
     steps:
       - name: Checkout
