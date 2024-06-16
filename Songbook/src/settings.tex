@@ -1,0 +1,203 @@
+﻿% geometry package import, page size setting
+\usepackage[a5paper, total={5in, 7.1in}]{geometry}
+
+% lainputenc package, encoding setting
+\usepackage[utf8]{luainputenc}
+
+% fontspec package, UTF8 symbols support, requires cm-unicode package
+\usepackage{fontspec}
+\setmainfont{CMU Serif}[Ligatures=TeX]
+\setsansfont{CMU Sans Serif}[Ligatures=TeX]
+\setmonofont{CMU Typewriter Text}
+
+% babel package, multilang support
+\usepackage[main=czech,english,russian]{babel}
+
+% bookmark package, contents hyperlinks and bookmarks 
+\usepackage{bookmark}
+
+% Disable \ch macro from LuaLaTeX so that it can be overriden by songs package macro
+\let\ch\undefined 
+
+% songs package
+\usepackage[chorded]{songs}
+
+
+% graphicx package, easy insert of images etc.
+%\usepackage{graphicx}
+%\graphicspath{ {./images/} }
+
+% graphicx package, easy insert of images etc.
+%\notenamesin{A}{H}{C}{D}{E}{F}{G}
+
+% afterpage package, allows easy insert of new pages where needed
+\usepackage{afterpage}
+
+% Custom macro for a new blankpage \afterpage{\blankpage}
+\newcommand\blankpage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+}
+
+% Index setup
+\newindex{mainsongsindex}{mainsongsindex}
+
+% Contents font size setup
+\renewcommand{\idxtitlefont}{\normalsize}
+
+% Index numbering per page instead of song number
+%\indexsongsas{mainsongsindex}{\thepage}
+
+% Disable page numbering
+\pagestyle{empty}
+
+%--------------------------------------
+% Refrain marked by "Ref" instead of a vertical line, see https://tex.stackexchange.com/questions/438894/how-to-change-the-position-of-the-song-number
+
+% \usepackage{xpatch}
+
+% \makeatletter
+
+% \xpatchcmd{\justifyleft}
+  % {\SB@cbarshift}
+  % {\ifSB@inchorus\advance\leftskip\versenumwidth\fi}
+  % {}{}
+
+% \xpatchcmd{\justifycenter}
+  % {\SB@cbarshift}{}
+  % {}{}
+
+% \xpatchcmd{\SB@par}
+  % {\ifdim\cbarwidth>\z@\nobreak\else\SB@ilpenalty\fi}{}
+  % {}{}
+
+% \xpatchcmd{\brk}
+  % {
+    % \ifdim\cbarwidth=\z@%
+    % \ifrepchorus\marks\SB@cmarkclass{}\fi%
+    % \SB@breakpoint\brkpenalty%
+  % }
+  % {
+    % \endgroup\egroup
+    % \ifrepchorus\ifSB@gotchorus\else
+      % \global\setbox\SB@chorusbox\vbox{
+        % \unvbox\SB@chorusbox
+        % \SB@chorusbar\SB@box
+        % \unvcopy\SB@box
+        % \SB@breakpoint\brkpenalty
+      % }%
+    % \fi
+  % }
+  % {}{}
+
+% \xpatchcmd{\beginchorus}
+  % {\vnumberedfalse}{\vnumberedtrue}
+  % {}{}
+
+% \xpatchcmd{\SB@@beginchorus}
+  % {
+    % \setbox\SB@box\vbox\bgroup\begingroup%
+      % \ifchorded%
+        % \def\SB@everypar{%
+          % \vrule\@height\baselineskip\@width\z@\@depth\z@%
+          % \gdef\SB@everypar{}%
+        % }%
+        % \everypar{\SB@everypar\everypar{}}%
+      % \fi%
+  % }
+  % {
+    % \setbox\SB@box\vbox\bgroup\begingroup
+      % \ifvnumbered
+        % \def\SB@everypar{%
+          % \setbox\SB@box\hbox{Ref}%
+           % \ifdim\wd\SB@box<\versenumwidth
+             % \setbox\SB@box
+             % \hbox to\versenumwidth{\unhbox\SB@box\hfil}%
+           % \fi
+          % \ifchorded\vrule\@height\baselineskip\@width\z@\@depth\z@\fi
+          % \placeversenum\SB@box
+          % \gdef\SB@everypar{}%
+        % }
+      % \else
+        % \def\SB@everypar{
+          % \ifchorded\vrule\@height\baselineskip\@width\z@\@depth\z@\fi
+          % \gdef\SB@everypar{}
+        % }
+      % \fi
+      % \everypar{\SB@everypar\everypar{}}
+  % }
+  % {}{}
+
+% \xpatchcmd{\SB@endchorus}
+  % {\SB@chorusbar\SB@box}{}
+  % {}{}
+
+%--------------------------------------
+% Macro setup for single line display of verses without chords, see https://tex.stackexchange.com/questions/19813/creating-a-custom-songbook-with-the-songs-package
+
+%The intended solution offered by the songs package is to use the \chordsoff and \chordson macros to turn chord-spacing on and off as needed to designate which verses/choruses are chorded and which are not. After \chordsoff, lines are single-spaced; and after \chordson, they are double-spaced.
+%Note that if your songs are in a master file that gets loaded into multiple book types (both chorded and non-chorded), then you will probably want to create your own conditional macros for this similar to the following:
+%
+% Custom switch between diplaying chords everywhere
+\newcounter{AlwaysDisplayChords}
+\setcounter{AlwaysDisplayChords}{0}
+
+\ifchorded
+  \ifnum\value{AlwaysDisplayChords}=1
+    \newcommand{\stopchords}{}
+    \newcommand{\resumechords}{}
+  \else
+    \newcommand{\stopchords}{\chordsoff}
+    \newcommand{\resumechords}{\chordson}
+  \fi
+\else
+  \newcommand{\stopchords}{}
+  \newcommand{\resumechords}{}
+\fi
+
+\newcommand{\stopchordsalways}{\chordsoff}
+\newcommand{\resumechordsalways}{\chordson}
+%
+%Then you can use \stopchords and \resumechords instead of \chordsoff and \chordson to affect the chord book's line-spacing without affecting the lyric-only books.
+%Although one can globally modify \baselineadj to force single-spacing of all lines not containing chords (e.g., by writing something like "\baselineadj=-14pt"), this has the potential disadvantage of single-spacing even lines within a chorded verse that happen to not contain a chord. This can be visually confusing to some musicians.
+%---------------------------------------------
+
+% Digits formatting macro to add leading zeroes, eg. 5 → 05, alternative to \two@digits
+\newcommand\formatTwoDigits[1]{\ifnum#1<10 0\fi#1}
+
+% Unnumbered songs
+%\nosongnumbers
+
+% Unnumbered verses
+\noversenumbers
+
+% Step between verses setup +- 2pt
+\versesep=5pt plus 2pt minus 2pt
+
+% Chord font setup
+\renewcommand{\printchord}[1]{\rmfamily\bf#1}
+
+% Setup of \textnote background
+%\renewcommand{\notebgcolor}{white}
+
+% Multiword chords without word splitting, better to use for a singular song only
+%\MultiwordChords
+
+% Number of document columns setup
+\songcolumns{2}
+
+% Global song numbering variable
+\newcounter{song_numbering}
+
+% obeylines fix, see https://tex.stackexchange.com/a/666610
+\makeatletter
+\renewcommand\SB@obeylines{%
+  \let\obeyedline\SB@par%
+  \obeylines%
+  \let\@par\SB@@par%
+}
+\makeatother
+
+%====================================================

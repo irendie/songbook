@@ -1,0 +1,7 @@
+# Ignore files from building process
+*.aux
+*.log
+*.out
+*.sxc
+*.sbx
+*.sxd

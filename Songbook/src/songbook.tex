@@ -1,0 +1,34 @@
+﻿\documentclass[a5paper]{article}
+
+\input{settings.tex}
+
+\begin{document}
+
+% Frontpage
+\input{frontpage.tex}
+
+% Create contents list [COLUMNS]{NAME}{INDEX_FILE}
+\showindex[2]{Abecední seznam písní}{mainsongsindex}
+
+\input{campfire_songs.tex}
+
+\input{other_songs.tex}
+
+% \input{wip_songs.tex}
+
+% \input{removed_songs.tex}
+
+\input{chords_list.tex}
+
+\vfill
+\hfill
+\hrule
+\hfill
+\newline
+\newline
+
+\input{thanks.tex}
+
+%\afterpage{\blankpage}
+
+\end{document}
