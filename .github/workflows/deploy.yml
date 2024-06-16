@@ -19,7 +19,7 @@ jobs:
       - name: Copy release file to server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: ./Songbook/release/songbook.pdf
+          local: ./release/songbook.pdf
           remote: ${{ secrets.SSH_SERVER_PATH }}/songbook.pdf
           host: ${{ secrets.SSH_SERVER_HOST }}
           port: ${{ secrets.SSH_SERVER_PORT }}
