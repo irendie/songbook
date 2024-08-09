@@ -17,12 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Copy release file to server
-        uses: garygrossgarten/github-action-scp@release
+        uses: appleboy/scp-action@v0.1.7
         with:
-          local: ./release/songbook.pdf
-          remote: ${{ secrets.SSH_SERVER_PATH }}/songbook.pdf
+          source: "./release/songbook.pdf"
+          target: ${{ secrets.SSH_SERVER_PATH }}
           host: ${{ secrets.SSH_SERVER_HOST }}
           port: ${{ secrets.SSH_SERVER_PORT }}
           username: ${{ secrets.SSH_SERVER_USER }}
-          privateKey : ${{ secrets.SSH_SERVER_KEY }}
+          key: ${{ secrets.SSH_SERVER_KEY }}
           passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
