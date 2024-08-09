@@ -26,3 +26,4 @@ jobs:
           username: ${{ secrets.SSH_SERVER_USER }}
           key: ${{ secrets.SSH_SERVER_KEY }}
           passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
+          strip_components: 1
