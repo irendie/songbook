@@ -4,11 +4,22 @@
 % lainputenc package, encoding setting
 \usepackage[utf8]{luainputenc}
 
+% LuaLaTex on-the-fly loader
+\usepackage{luaotfload}
+
 % fontspec package, UTF8 symbols support, requires cm-unicode package
 \usepackage{fontspec}
+
+% Use CMU fonts which have both latin and cyrillic letters
 \setmainfont{CMU Serif}[Ligatures=TeX]
 \setsansfont{CMU Sans Serif}[Ligatures=TeX]
 \setmonofont{CMU Typewriter Text}
+
+% Localization package instead of babel
+% \usepackage{polyglossia}
+% \setdefaultlanguage{czech}
+% \setotherlanguage{english}
+% \setotherlanguage{russian}
 
 % babel package, multilang support
 \usepackage[main=czech,english,russian]{babel}
@@ -22,7 +33,6 @@
 % songs package
 \usepackage[chorded]{songs}
 
-
 % graphicx package, easy insert of images etc.
 %\usepackage{graphicx}
 %\graphicspath{ {./images/} }
@@ -31,15 +41,15 @@
 %\notenamesin{A}{H}{C}{D}{E}{F}{G}
 
 % afterpage package, allows easy insert of new pages where needed
-\usepackage{afterpage}
+% \usepackage{afterpage}
 
 % Custom macro for a new blankpage \afterpage{\blankpage}
-\newcommand\blankpage{
-    \null
-    \thispagestyle{empty}
-    \addtocounter{page}{-1}
-    \newpage
-}
+% \newcommand\blankpage{
+    % \null
+    % \thispagestyle{empty}
+    % \addtocounter{page}{-1}
+    % \newpage
+% }
 
 % Index setup
 \newindex{mainsongsindex}{mainsongsindex}
