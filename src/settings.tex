@@ -32,9 +32,6 @@
 \renewcommand{\Huge}{\fontsize{36}{43.2}\selectfont}
 %\renewcommand{\HUGE}{\fontsize{48}{57.6}\selectfont}
 
-% Chord font setup
-\renewcommand{\printchord}[1]{\rmfamily\bf#1}
-
 % Song numbering box size override (needed if >3 characters)
 % \setlength{\songnumwidth}{2cm}
 
@@ -55,6 +52,9 @@
 
 % songs package
 \usepackage[chorded]{songs}
+
+% Chord font setup
+\renewcommand{\printchord}[1]{\rmfamily\bf#1}
 
 % graphicx package, easy insert of images etc.
 %\usepackage{graphicx}
