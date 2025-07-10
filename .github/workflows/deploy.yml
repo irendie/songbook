@@ -6,6 +6,8 @@ permissions:
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - '**/ReadMe.md'
 
 jobs:
   deploy-release:
@@ -17,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Copy A5 release file to server
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           source: "./release/songbook.pdf"
           target: ${{ secrets.SSH_SERVER_PATH }}
@@ -28,7 +30,7 @@ jobs:
           passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
           strip_components: 2
       - name: Copy A4 release file to server
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           source: "./release/songbook_A4.pdf"
           target: ${{ secrets.SSH_SERVER_PATH }}
