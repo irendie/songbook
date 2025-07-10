@@ -16,10 +16,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Copy release file to server
+      - name: Copy A5 release file to server
         uses: appleboy/scp-action@v0.1.7
         with:
           source: "./release/songbook.pdf"
+          target: ${{ secrets.SSH_SERVER_PATH }}
+          host: ${{ secrets.SSH_SERVER_HOST }}
+          port: ${{ secrets.SSH_SERVER_PORT }}
+          username: ${{ secrets.SSH_SERVER_USER }}
+          key: ${{ secrets.SSH_SERVER_KEY }}
+          passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
+          strip_components: 2
+      - name: Copy A4 release file to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          source: "./release/songbook_A4.pdf"
           target: ${{ secrets.SSH_SERVER_PATH }}
           host: ${{ secrets.SSH_SERVER_HOST }}
           port: ${{ secrets.SSH_SERVER_PORT }}

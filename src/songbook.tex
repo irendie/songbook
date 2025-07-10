@@ -1,72 +1,18 @@
-﻿\documentclass[a4paper]{article}
+﻿\documentclass[a5paper]{article}
 
-\input{settings.tex}
+\input{settings_geometry_A5.tex}
+
+\input{settings_01.tex}
+
+\input{settings_fontsize_A5.tex}
+
+\input{settings_02.tex}
 
 \begin{document}
 
-% Frontpage
-\input{frontpage.tex}
+\input{frontpage_A5.tex}
 
 % Create contents list [COLUMNS]{NAME}{INDEX_FILE}
-\showindex[3]{Abecední seznam písní}{mainsongsindex}
+\showindex[2]{Abecední seznam písní}{mainsongsindex}
 
-% --- Campfire songs ---
-
-\songsection{Písně}
-
-\begin{songs}{mainsongsindex}
-
-% Song section symbol and numbering setting
-% \renewcommand{\thesongnum}{A\arabic{songnum}}
-
-% Load global song numbering
-%\setcounter{songnum}{\arabic{song_numbering}}
-
-\input{campfire_songs.tex}
-
-% Update global numbering counter
-% \addtocounter{song_numbering}{\arabic{songnum}}
-
-% \end{songs}
-
-% --- Other songs ---
-
-% \songsection{Rozličné písně (B)}
-
-% \begin{songs}{mainsongsindex}
-
-% Song section symbol and numbering setting
-% \renewcommand{\thesongnum}{B\arabic{songnum}}
-
-% Load global song numbering
-%\setcounter{songnum}{\arabic{song_numbering}}
-
-\input{other_songs.tex}
-
-% Update global numbering counter
-% \addtocounter{song_numbering}{\arabic{songnum}}
-
-\end{songs}
-
-% --- Unused ---
-
-% \input{wip_songs.tex}
-
-% \input{removed_songs.tex}
-
-% --- Chords ---
-
-\input{chords_list.tex}
-
-\vfill
-\hfill
-\hrule
-\hfill
-\newline
-\newline
-
-\input{thanks.tex}
-
-%\afterpage{\blankpage}
-
-\end{document}
+\input{main.tex}
