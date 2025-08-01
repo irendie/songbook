@@ -6,8 +6,8 @@ permissions:
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - '**/ReadMe.md'
+    paths:
+      - 'release/**'
 
 jobs:
   deploy-release:
