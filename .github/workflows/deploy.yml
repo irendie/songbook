@@ -29,6 +29,7 @@ jobs:
           key: ${{ secrets.SSH_SERVER_KEY }}
           passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
           strip_components: 2
+          overwrite: true
       - name: Copy A4 release file to server
         uses: appleboy/scp-action@v1.0.0
         with:
@@ -40,3 +41,4 @@ jobs:
           key: ${{ secrets.SSH_SERVER_KEY }}
           passphrase: ${{ secrets.SSH_SERVER_PASSPHRASE }}
           strip_components: 2
+          overwrite: true
