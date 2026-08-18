@@ -11,10 +11,9 @@ Personal songbook, rewritten from LuaLaTeX (`songs` package, see the `main` bran
   * `wip_songs.cho`, `removed_songs.cho` – not part of the build
 * `chordpro/config/common.json` – shared layout config (fonts, chorus bar, verse-number labels, alphabetical index)
 * `chordpro/config/A4.json`, `chordpro/config/A5.json` – paper size and font sizes
-* `chordpro/config/chords.json` – guitar chord shapes (generated from `src/chords_list.tex`)
+* `chordpro/config/chords.json` – guitar chord shapes (generated from `src/chords_list.tex` on the `main` branch)
 * `script/ChordPro_A4_Build.bat`, `script/ChordPro_A5_Build.bat` (+ `*_BuildAndPreview.bat`) – build the PDFs into `release/`
-* `script/convert_to_chordpro.py` – the LaTeX → ChordPro converter used for the migration
-* `src/` – original LuaLaTeX sources (kept for reference until the ChordPro build is verified)
+* `script/convert_to_chordpro.py` – the LaTeX → ChordPro converter used for the migration (needs the `src/` sources from the `main` branch)
 
 ## Building
 Install ChordPro, then run `script/ChordPro_A5_Build.bat` or `script/ChordPro_A4_Build.bat`.
