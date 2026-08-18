@@ -4,11 +4,17 @@ Personal songbook written in LuaLaTeX using the [songs](https://songs.sourceforg
 
 ## Quick start
 
-The fastest path on any OS with Docker installed — no TeX, no Nix, nothing else needed:
+The fastest path on any OS with Docker installed — no TeX, no Nix, nothing else needed. A prebuilt toolchain image is published to GHCR by CI:
+
+```bash
+docker run --rm -v "$PWD:/songbook" ghcr.io/irendie/songbook:toolchain all   # PowerShell: -v "${PWD}:/songbook"
+```
+
+Or build the image yourself:
 
 ```bash
 docker build -t songbook .
-docker run --rm -v "$PWD:/songbook" songbook all        # PowerShell: -v "${PWD}:/songbook"
+docker run --rm -v "$PWD:/songbook" songbook all
 ```
 
 PDFs appear in `release/`. For faster incremental builds or editing, set up one of the environments below.
