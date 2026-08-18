@@ -5,3 +5,4 @@
 *.sxc
 *.sbx
 *.sxd
+__pycache__/

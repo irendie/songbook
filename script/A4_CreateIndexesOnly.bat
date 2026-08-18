@@ -1,3 +1,1 @@
-cd ../src/
-lualatex songbook_A4.tex
-songidx -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
+@call "%~dp0build.bat" a4 --indexes-only

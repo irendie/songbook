@@ -1,18 +1,1 @@
-cd ../src/
-lualatex songbook.tex
-songidx -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
-cd ../script/
-py sort_index.py
-cd ../src/
-lualatex songbook.tex
-move songbook.pdf ../release/songbook.pdf
-lualatex songbook_A4.tex
-songidx -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
-cd ../script/
-py sort_index.py
-cd ../src/
-lualatex songbook_A4.tex
-move songbook_A4.pdf ../release/songbook_A4.pdf
-cd ../release/
-songbook.pdf
-songbook_A4.pdf
+@call "%~dp0build.bat" all --preview --custom-sort
