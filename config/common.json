@@ -7,17 +7,36 @@
         "even-odd-pages" : 0,
         "pagealign-songs" : 0,
 
+        // Keep 2-page songs on facing pages (no page turn mid-song); "compact"
+        // fills the alignment gaps with 1-page songs instead of blank pages.
+        "sort-pages" : "2page,compact",
+
         "fontdir" : [ "C:/Windows/Fonts" ],
+        // Serif lyrics, bold sans chords/titles for clear visual separation.
         "fonts" : {
-            "title"    : { "file" : "timesbd.ttf" },
-            "subtitle" : { "file" : "timesi.ttf" },
+            "title"    : { "file" : "arialbd.ttf" },
+            "subtitle" : { "file" : "ariali.ttf" },
             "text"     : { "file" : "times.ttf" },
-            // Original book printed chords in bold roman (\printchord{\rmfamily\bf})
-            "chord"    : { "file" : "timesbd.ttf" },
+            "chord"    : { "file" : "arialbd.ttf", "color" : "#1a4d8f" },
             "comment"  : { "file" : "ariali.ttf" },
-            "label"    : { "file" : "timesbd.ttf" },
+            "label"    : { "file" : "arialbd.ttf", "color" : "#666666" },
             "toc"      : { "file" : "times.ttf" },
-            "tab"      : { "file" : "cour.ttf" },
+            "tab"      : { "file" : "consola.ttf" },
+        },
+
+        // Extra breathing room between lyric lines with chords above them.
+        "spacing" : {
+            "lyrics" : 1.25,
+            "chords" : 1.15,
+            "empty"  : 0.8,
+            "toc"    : 1.35,
+        },
+
+        // Centered page number in the footer
+        "formats" : {
+            "default" : {
+                "footer" : [ "", "%{page}", "" ],
+            },
         },
 
         // Verse numbers in the left margin (like the songs package did)

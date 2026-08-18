@@ -38,6 +38,8 @@ def main():
     version = f"Verze {date.today():%Y-%m-%d}, {fmt} formát"
     draw_smallcaps(c, version, w / 2, h / 2 - sub_size * 2, sub_size)
     c.showPage()
+    # blank verso keeps page parity so 2-page songs stay on facing pages
+    c.showPage()
     c.save()
     print(f"wrote {out}")
 

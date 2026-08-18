@@ -9,12 +9,14 @@
         "headspace"    : 45,
         "footspace"    : 20,
         "fonts" : {
-            "title"    : { "size" : 16 },
+            "title"    : { "size" : 18 },
             "subtitle" : { "size" : 11 },
-            "text"     : { "size" : 12 },
+            "text"     : { "size" : 12.5 },
             "chord"    : { "size" : 11 },
             "comment"  : { "size" : 10 },
-            "tab"      : { "size" : 9 },
+            "label"    : { "size" : 10 },
+            "tab"      : { "size" : 9.5 },
+            "toc"      : { "size" : 11 },
         },
     },
 }
