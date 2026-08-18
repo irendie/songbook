@@ -6,6 +6,8 @@
         "marginbottom" : 30,
         "marginleft"   : 30,
         "marginright"  : 30,
+        "headspace"    : 30,
+        "footspace"    : 15,
         "fonts" : {
             "title"    : { "size" : 12 },
             "subtitle" : { "size" : 8 },

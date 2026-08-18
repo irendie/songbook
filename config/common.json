@@ -3,6 +3,10 @@
 {
     // Song lyrics are Czech/Slovak/Russian: use TTF fonts with full Unicode coverage.
     "pdf" : {
+        // don't insert blank pages to make songs start on odd (right-hand) pages
+        "even-odd-pages" : 0,
+        "pagealign-songs" : 0,
+
         "fontdir" : [ "C:/Windows/Fonts" ],
         "fonts" : {
             "title"    : { "file" : "timesbd.ttf" },
