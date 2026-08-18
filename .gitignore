@@ -6,3 +6,4 @@
 *.sbx
 *.sxd
 __pycache__/
+release/

@@ -1,24 +1,52 @@
-name: Deploy release to server
+name: Build and deploy songbook
 
 permissions:
-  contents: read
+  contents: write # push the "latest" tag and its GitHub release
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'release/**'
+      - 'src/**'
+      - 'script/**'
+      - 'Dockerfile'
       - '.github/workflows/**'
+  workflow_dispatch:
 
 jobs:
-  deploy-release:
-  
+  build-and-deploy:
+
     runs-on: ubuntu-latest
     environment: main
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build toolchain image
+        run: docker build -t songbook .
+
+      - name: Build PDFs (A4 + A5)
+        run: docker run --rm -v "$PWD:/songbook" songbook all --custom-sort
+
+      - name: Upload PDFs as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: songbook-pdfs
+          path: release/*.pdf
+          if-no-files-found: error
+
+      - name: Publish PDFs to GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest songbook
+          body: Automated build of ${{ github.sha }}
+          make_latest: true
+          files: |
+            release/songbook.pdf
+            release/songbook_A4.pdf
+
       - name: Copy A5 release file to server
         uses: appleboy/scp-action@v1.0.0
         with:
