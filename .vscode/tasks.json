@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build A4",
+            "type": "shell",
+            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" a4" },
+            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" a4" },
+            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" a4" },
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build A5",
+            "type": "shell",
+            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" a5" },
+            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" a5" },
+            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" a5" },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build all (custom sort)",
+            "type": "shell",
+            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" all -CustomSort" },
+            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" all --custom-sort" },
+            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" all --custom-sort" },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build all (Docker)",
+            "type": "shell",
+            "command": "docker build -t songbook \"${workspaceFolder}\" && docker run --rm -v \"${workspaceFolder}:/songbook\" songbook all",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" clean" },
+            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" clean" },
+            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" clean" },
+            "problemMatcher": []
+        }
+    ]
+}
