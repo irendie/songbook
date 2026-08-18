@@ -53,30 +53,31 @@ PDFs land in `release/` on the host as usual (the repo is bind-mounted).
 
 ## Building
 
-All builds are driven by a single parameterized script — `script/build.bat` (Windows) or `script/build.sh` (Linux/macOS):
+All builds are driven by a single parameterized script — `script/build.ps1` (Windows) or `script/build.sh` (Linux/macOS):
 
 ```
-build <a4|a5|all|clean> [--preview] [--no-index] [--custom-sort] [--indexes-only]
+build.ps1 <a4|a5|all|clean> [-Preview] [-NoIndex] [-CustomSort] [-IndexesOnly]
+build.sh  <a4|a5|all|clean> [--preview] [--no-index] [--custom-sort] [--indexes-only]
 ```
 
-| Argument | Meaning |
+| Argument (`.ps1` / `.sh`) | Meaning |
 |---|---|
 | `a4` / `a5` / `all` | Which format(s) to build |
 | `clean` | Remove auxiliary build files (`.aux`, `.log`, `.sxd`, ...) from `src/` |
-| `--preview` | Open the resulting PDF(s) after the build |
-| `--no-index` | Single LuaLaTeX pass, skip song index generation |
-| `--custom-sort` | Post-process the index with `sort_index.py` (proper Czech alphabet sorting, incl. `Ch`) |
-| `--indexes-only` | Stop after generating the index (no final PDF) |
+| `-Preview` / `--preview` | Open the resulting PDF(s) after the build |
+| `-NoIndex` / `--no-index` | Single LuaLaTeX pass, skip song index generation |
+| `-CustomSort` / `--custom-sort` | Post-process the index with `sort_index.py` (proper Czech alphabet sorting, incl. `Ch`) |
+| `-IndexesOnly` / `--indexes-only` | Stop after generating the index (no final PDF) |
 
 Resulting PDFs are placed in `release/`.
 
 ### Examples
 
-Windows:
+Windows (PowerShell):
 
-```bat
+```powershell
 cd script
-build.bat all --preview
+.\build.ps1 all -Preview
 ```
 
 Linux/macOS:
@@ -85,8 +86,6 @@ Linux/macOS:
 cd script
 ./build.sh a5 --preview --custom-sort
 ```
-
-On Windows you can also just double-click one of the wrapper scripts in `script/` (e.g. `A4_BuildAndPreview.bat`, `All_Build.bat`, `CleanUp.bat`) — they delegate to `build.bat` with the corresponding arguments.
 
 ## Project structure
 
@@ -97,7 +96,7 @@ On Windows you can also just double-click one of the wrapper scripts in `script/
 | `src/main.tex` | Shared document body |
 | `src/campfire_songs.tex`, `src/other_songs.tex`, ... | Song collections |
 | `src/settings_*.tex` | Font size / geometry settings per format |
-| `script/` | Build scripts (`build.bat`, `build.sh`, wrappers, `sort_index.py`) |
+| `script/` | Build scripts (`build.ps1`, `build.sh`, `sort_index.py`) |
 | `flake.nix`, `shell.nix`, `nix/` | Nix dev shell with the full toolchain |
 | `Dockerfile` | Container image for building without a local TeX install |
 | `script/setup_nixos_wsl.ps1` | One-shot NixOS-on-WSL setup for Windows |

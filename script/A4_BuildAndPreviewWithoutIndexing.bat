@@ -1,1 +1,0 @@
-@call "%~dp0build.bat" a4 --preview --no-index
