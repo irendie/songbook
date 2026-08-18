@@ -62,7 +62,7 @@ build() {
     lualatex -interaction=nonstopmode "$job.tex"
     if [[ "$INDEX" == 1 ]]; then
         echo "=== $job: generating song index ==="
-        songidx -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
+        texlua "$SCRIPT_DIR/songidx/songidx.lua" -l cs_CZ.UTF-8 mainsongsindex.sxd mainsongsindex.sbx
         if [[ "$CUSTOM_SORT" == 1 ]]; then
             echo "=== $job: applying custom Czech sort ==="
             python3 "$SCRIPT_DIR/sort_index.py"
@@ -74,7 +74,11 @@ build() {
     mv -f "$job.pdf" "$RELEASE_DIR/$job.pdf"
     echo "=== $job: PDF written to release/$job.pdf ==="
     if [[ "$PREVIEW" == 1 ]]; then
-        xdg-open "$RELEASE_DIR/$job.pdf" >/dev/null 2>&1 &
+        if [[ "$(uname)" == "Darwin" ]]; then
+            open "$RELEASE_DIR/$job.pdf"
+        else
+            xdg-open "$RELEASE_DIR/$job.pdf" >/dev/null 2>&1 &
+        fi
     fi
 }
 

@@ -2,11 +2,22 @@
 
 Personal songbook written in LuaLaTeX using the [songs](https://songs.sourceforge.net/) package. It builds into two PDF formats: **A5** (`songbook.pdf`, for print) and **A4** (`songbook_A4.pdf`).
 
+## Quick start
+
+The fastest path on any OS with Docker installed — no TeX, no Nix, nothing else needed:
+
+```bash
+docker build -t songbook .
+docker run --rm -v "$PWD:/songbook" songbook all        # PowerShell: -v "${PWD}:/songbook"
+```
+
+PDFs appear in `release/`. For faster incremental builds or editing, set up one of the environments below.
+
 ## Prerequisites
 
 Pick **one** of the following environments:
 
-### A. Nix (recommended — fully reproducible)
+### A. Nix (recommended — fully reproducible, Linux/macOS/WSL)
 
 With [Nix](https://nixos.org/download/) installed, everything (TeX Live, `songs`/`songidx`, CMU fonts, Python, Czech locale) is provided by the dev shell:
 
@@ -16,6 +27,8 @@ nix-shell                    # classic, no experimental features needed
 nix develop                  # flakes
 ./script/build.sh all --custom-sort
 ```
+
+[direnv](https://direnv.net/) users: `direnv allow` once and the shell activates automatically (see `.envrc`).
 
 ### B. NixOS on WSL (Windows)
 
@@ -43,13 +56,19 @@ docker run --rm -v "${PWD}:/songbook" songbook all --preview # PowerShell syntax
 
 PDFs land in `release/` on the host as usual (the repo is bind-mounted).
 
+> Note: Docker runs as root, so it leaves root-owned auxiliary files in `src/`. If a later WSL/Linux build fails with "can't write on file", run `build clean` first.
+
 ### D. Manual installation
 
 * A LaTeX distribution with **LuaLaTeX** (TeX Live or MiKTeX)
-  * `songs` package — provides the `songidx` index generator used by the build scripts
+  * `songs` package — the `songidx` index generator itself is vendored in `script/songidx/` (GPL-2, from [songs upstream](https://songs.sourceforge.net/)) and runs via `texlua`, so nothing extra to install
   * `cm-unicode` font package — probably needs to be installed manually; the rest should auto-install (if package auto-installing is enabled in your LaTeX distribution)
 * **Python 3** — only needed for the optional custom Czech index sorting (`--custom-sort`)
-  * On Linux, the `cs_CZ.UTF-8` locale must be installed
+  * On Linux/macOS, the `cs_CZ.UTF-8` locale must be installed
+
+### VS Code
+
+The workspace ships build tasks (`Terminal → Run Build Task`, Ctrl+Shift+B): A4/A5/all builds, Docker build, and clean — they pick the right script for your OS automatically.
 
 ## Building
 

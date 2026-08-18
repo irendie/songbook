@@ -23,6 +23,6 @@ ENV LANG=cs_CZ.UTF-8
 
 WORKDIR /songbook
 
-# The repository is expected to be bind-mounted at /songbook.
+# The repository (including the vendored script/songidx) is bind-mounted at /songbook.
 ENTRYPOINT ["bash", "script/build.sh"]
 CMD ["all"]

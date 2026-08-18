@@ -1,63 +1,83 @@
-# Importy, díky kterým můžeme řadit dle české abecedy
+"""Re-sort the songidx-generated song index (src/mainsongsindex.sbx).
+
+Uses Czech collation (including the 'Ch' digraph, which gets its own index
+block) and orders the blocks Latin -> Cyrillic -> any other alphabet.
+"""
 import locale
 import os
 import re
 import unicodedata
 
-# Nastavení lokalizace pro řazení (názvy locale se liší mezi Windows a Linuxem)
-for loc in ("cs_CZ.UTF-8", "cs_CZ", "cs"):
+# Locale names differ between Windows and Linux.
+for loc in ("cs_CZ.UTF-8", "cs_CZ", "cs", "Czech"):
     try:
         locale.setlocale(locale.LC_ALL, loc)
         break
     except locale.Error:
         continue
 else:
-    raise SystemExit("Česká locale není nainstalována (cs_CZ.UTF-8 / cs_CZ / cs).")
+    raise SystemExit("Czech locale is not installed (cs_CZ.UTF-8 / cs_CZ / cs).")
 
-# Cesta k indexu odvozená od umístění tohoto skriptu, aby nezáleželo na pracovním adresáři
-index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "mainsongsindex.sbx")
+# Resolve the index relative to this script so the working directory doesn't matter.
+INDEX_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "src", "mainsongsindex.sbx"
+)
 
-# Deklarace polí
-titles = []
+ENTRY_PREFIX = "\\idxentry{"
 
-# Načítání názvů písní a jejich seřazení
-with open(index_path, 'r', encoding='utf-8') as index_file:
-    # Zapsání každého řádku, který obsahuje název písně, do pole titles
-    for line in index_file:
-        if line.startswith("\\idxentry{"):
-            #Korekce UTF8 znaku
-            sanitizedLine = re.sub(r'\\r\s(\S)', r'\1' + u'\u030a', line) 
-            sanitizedLine = re.sub(r'\\v\s(\S)', r'\1' + u'\u030c', sanitizedLine)
-            sanitizedLine = unicodedata.normalize('NFC', sanitizedLine)
-            titles.append(sanitizedLine)
-    # Seřazení pole titles
-    titles.sort(key=locale.strxfrm)
 
-# zápis zpět do souboru
-with open(index_path, 'w', encoding='utf-8') as new_file:
-    # deklarace proměnných, které jsou používány pro zjištění, zda máme začít další blok
-    start = True
-    last_letter = ""
-    # P každý název v už seřazeném seznamu názvů zjistíme, jestli má začít blok od dalšího písmene, pokud ano, začneme další blok. Tak jako tak zapíšeme daný název
-    for title in titles:
-        # Načtení počátečního písmena písně
-        current_letter = title[10].lower()
-        # Zjišťování, zda jde o písmeno CH, a případný zápis CH místo C
-        if current_letter == "c":
-            if title[11].lower() == "h":
-                current_letter = "ch"
-        # Jsou-li poslední použité a aktuální písmeno rozdílné, začneme nový blok dle nového písmena
-        if last_letter != current_letter:
-            # Další 2 podmínky zakončují předchozí blok, ale pouze pokud už byl nějaký zapsán
-            if not start:
-                new_file.write("\\end{idxblock}\n")
-            if start:
-                start = False
-            # Zápis začátku nového bloky
-            new_file.write("\\begin{idxblock}{" + str(current_letter.upper()) + "}\n")
-            # aktualizována hodnota posledního procesovaného písmene na aktuální hodnotu
-            last_letter = current_letter
-        # Zápis samotného názvu
-        new_file.write(title)
-    # Ukončení posledního bloku
-    new_file.write("\\end{idxblock}\n")
+def sanitize(line: str) -> str:
+    """Replace songidx accent macros (\\r = ring, \\v = caron) with combining
+    characters and normalize to NFC so collation sees real letters."""
+    line = re.sub(r"\\r\s(\S)", "\\1\u030a", line)
+    line = re.sub(r"\\v\s(\S)", "\\1\u030c", line)
+    return unicodedata.normalize("NFC", line)
+
+
+def title_of(entry: str) -> str:
+    return entry[len(ENTRY_PREFIX):]
+
+
+def script_group(title: str) -> int:
+    """Sort group of the title's first letter: 0 = Latin, 1 = Cyrillic, 2 = other."""
+    for char in title:
+        if char.isalpha():
+            name = unicodedata.name(char, "")
+            if "LATIN" in name:
+                return 0
+            if "CYRILLIC" in name:
+                return 1
+            return 2
+    return 2
+
+
+def block_letter(title: str) -> str:
+    """Index block heading for a title; 'Ch' is a standalone letter in Czech."""
+    if title[:2].lower() == "ch":
+        return "CH"
+    return title[:1].upper()
+
+
+def sort_key(entry: str):
+    title = title_of(entry)
+    return (script_group(title), locale.strxfrm(title))
+
+
+with open(INDEX_PATH, encoding="utf-8") as index_file:
+    entries = [sanitize(line) for line in index_file if line.startswith(ENTRY_PREFIX)]
+
+entries.sort(key=sort_key)
+
+# Rewrite the index, opening a new block whenever the leading letter changes.
+with open(INDEX_PATH, "w", encoding="utf-8") as index_file:
+    previous_letter = None
+    for entry in entries:
+        letter = block_letter(title_of(entry))
+        if letter != previous_letter:
+            if previous_letter is not None:
+                index_file.write("\\end{idxblock}\n")
+            index_file.write("\\begin{idxblock}{" + letter + "}\n")
+            previous_letter = letter
+        index_file.write(entry)
+    if previous_letter is not None:
+        index_file.write("\\end{idxblock}\n")

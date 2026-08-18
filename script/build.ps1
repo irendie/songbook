@@ -56,7 +56,7 @@ function Invoke-Build {
 
         if (-not $NoIndex) {
             Write-Host "=== ${Job}: generating song index ==="
-            songidx -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
+            texlua (Join-Path $PSScriptRoot "songidx\songidx.lua") -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
             if ($LASTEXITCODE -ne 0) { throw "songidx failed for $Job" }
 
             if ($CustomSort) {

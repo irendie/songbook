@@ -31,9 +31,9 @@ if ($existing) {
     Remove-Item $tarball -ErrorAction SilentlyContinue
 }
 
-# 3. First boot + sanity check
+# 3. First boot + sanity check (login shell so nix ends up on PATH)
 Write-Host "Checking Nix inside the distro..."
-wsl.exe -d $DistroName -- nix-shell --version
+wsl.exe -d $DistroName -- sh -lc "nix-shell --version"
 if ($LASTEXITCODE -ne 0) { throw "NixOS distro did not start correctly." }
 
 Write-Host ""
