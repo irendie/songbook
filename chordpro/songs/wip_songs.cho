@@ -1,0 +1,46 @@
+{title: Wonderwall}
+{artist: Oasis}
+{subtitle: Oasis}
+{columns: 1}
+{define: Em7 base-fret 1 frets 0 2 2 0 3 3}
+{define: G base-fret 1 frets 3 2 0 0 3 3}
+{define: Dsus4 base-fret 1 frets x x 0 2 3 3}
+{define: A7sus4 base-fret 1 frets x 0 2 0 3 3}
+{define: Cadd9 base-fret 1 frets x 3 2 0 3 3}
+{define: Dsus4/F# base-fret 1 frets 2 x 0 2 3 3}
+{define: Gsus2 base-fret 1 frets 3 0 0 0 3 3}
+{define: Em11 base-fret 1 frets 0 2 2 2 3 3}
+{comment: WIP: https://tabs.ultimate-guitar.com/tab/oasis/wonderwall-chords-1196609 a https://tabs.ultimate-guitar.com/tab/oasis/wonderwall-tabs-165916}
+{comment: Capo: 2}
+{start_of_verse: 1.}
+[Em7] [G] [Dsus4] [A7sus4]×4
+[Em7] Today is [G]gonna be the day that they're [Dsus4]gonna throw it back to [A7sus4]you
+[Em7] By now you [G]should've somehow real[Dsus4]ized what you gotta [A7sus4]do
+[Em7]I don't believe that [G]anybody [Dsus4]feels the way I [A7sus4]do
+About you [Cadd9]now [Dsus4] [A7sus4]
+{end_of_verse}
+{start_of_verse: 2.}
+Back beat the word was on the street that the fire in your heart is out
+I'm sure you've heard it all before but you never really had a doubt
+I don't believe that anybody feels the way I do
+About you [Em7]now [G] [Dsus4] [A7sus4]
+{end_of_verse}
+{start_of_chorus}
+And [Cadd9]all the roads we [Dsus4]have to walk are [Em7]winding
+And [Cadd9]all the lights that [Dsus4]lead us there are [Em7]blinding
+[Cadd9]There are many [Dsus4]things that I, would [Gsus2]like to [Dadd4/F#]say to
+[Em7]you but I [Dsus4]don't know how
+[A7sus4] ×4
+Because [Cadd9]maybe [Em7] [G]
+Yo[Em7]u're gonna be the one that [Cadd9]saves me [Em7] [G]
+And [Em7]after all[Cadd9] [Em7] [G]
+You're m[Em7]y wonderwall[Cadd9] [Em7] [G] [Em7]
+[Em11]
+{end_of_chorus}
+
+{new_song}
+
+{title: With Or Without You}
+{artist: U2}
+{subtitle: U2}
+TODO

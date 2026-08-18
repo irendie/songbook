@@ -1,0 +1,18 @@
+// A4 paper setup.
+{
+    "pdf" : {
+        "papersize" : "a4",
+        "margintop"    : 70,
+        "marginbottom" : 40,
+        "marginleft"   : 45,
+        "marginright"  : 45,
+        "fonts" : {
+            "title"    : { "size" : 16 },
+            "subtitle" : { "size" : 11 },
+            "text"     : { "size" : 12 },
+            "chord"    : { "size" : 11 },
+            "comment"  : { "size" : 10 },
+            "tab"      : { "size" : 9 },
+        },
+    },
+}

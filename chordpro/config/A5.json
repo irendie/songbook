@@ -1,0 +1,18 @@
+// A5 paper setup.
+{
+    "pdf" : {
+        "papersize" : "a5",
+        "margintop"    : 50,
+        "marginbottom" : 30,
+        "marginleft"   : 30,
+        "marginright"  : 30,
+        "fonts" : {
+            "title"    : { "size" : 12 },
+            "subtitle" : { "size" : 8 },
+            "text"     : { "size" : 9 },
+            "chord"    : { "size" : 8.5 },
+            "comment"  : { "size" : 7.5 },
+            "tab"      : { "size" : 7 },
+        },
+    },
+}

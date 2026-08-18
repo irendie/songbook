@@ -1,0 +1,54 @@
+// Common ChordPro configuration for the songbook (shared by A4 and A5).
+// Relaxed JSON: comments and trailing commas are allowed.
+{
+    // Song lyrics are Czech/Slovak/Russian: use TTF fonts with full Unicode coverage.
+    "pdf" : {
+        "fontdir" : [ "C:/Windows/Fonts" ],
+        "fonts" : {
+            "title"    : { "file" : "timesbd.ttf" },
+            "subtitle" : { "file" : "timesi.ttf" },
+            "text"     : { "file" : "times.ttf" },
+            // Original book printed chords in bold roman (\printchord{\rmfamily\bf})
+            "chord"    : { "file" : "timesbd.ttf" },
+            "comment"  : { "file" : "ariali.ttf" },
+            "label"    : { "file" : "timesbd.ttf" },
+            "toc"      : { "file" : "times.ttf" },
+            "tab"      : { "file" : "cour.ttf" },
+        },
+
+        // Verse numbers in the left margin (like the songs package did)
+        "labels" : {
+            "width" : "auto",
+            "align" : "left",
+        },
+
+        // Chorus marked with a vertical bar, like the songs package
+        "chorus" : {
+            "indent" : 0,
+            "bar" : { "offset" : 8, "width" : 1, "color" : "foreground" },
+            "recall" : { "quote" : false, "type" : "" },
+        },
+
+        // Chord diagrams for chords defined inside a song ({define: ...})
+        "diagrams" : {
+            "show" : "bottom",
+        },
+    },
+
+    // Two-column songs by default (songs package default); {columns: 1} overrides per song.
+    "settings" : {
+        "columns" : 2,
+    },
+
+    // Alphabetical index of songs
+    "contents" : [
+        {
+            "fields" : [ "sorttitle" ],
+            "label"  : "Abecední seznam písní",
+            "line"   : "%{title}",
+            "pageno" : "%{page}",
+            "fold"   : false,
+            "omit"   : false,
+        },
+    ],
+}
