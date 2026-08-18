@@ -5,8 +5,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-OUT_SONGS = ROOT / "chordpro" / "songs"
-OUT_CONFIG = ROOT / "chordpro" / "config"
+OUT_SONGS = ROOT / "songs"
+OUT_CONFIG = ROOT / "config"
 
 SONG_FILES = ["campfire_songs.tex", "other_songs.tex", "wip_songs.tex", "removed_songs.tex"]
 
