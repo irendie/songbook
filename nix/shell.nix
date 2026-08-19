@@ -1,18 +1,20 @@
-# Shared dev shell definition, used by both flake.nix and ../shell.nix.
 { pkgs }:
+
 let
   tex = pkgs.texlive.withPackages (ps: with ps; [
-    scheme-small        # lualatex, fontspec, luaotfload, geometry, hyperref, babel, ...
+    scheme-small
     luainputenc
     bookmark
-    songs               # songs package (chorded songbooks)
-    cm-unicode          # CMU Serif/Sans/Typewriter fonts (latin + cyrillic)
+    songs
+    cm-unicode
+
     babel-czech
     babel-english
     babel-russian
     babel-latin
     babel-croatian
     babel-slovak
+
     hyphen-czech
     hyphen-english
     hyphen-russian
@@ -20,20 +22,45 @@ let
     hyphen-croatian
     hyphen-slovak
   ]);
+
+  czechLocale = pkgs.callPackage
+    "${pkgs.path}/pkgs/development/libraries/glibc/locales.nix"
+    {
+      allLocales = false;
+      locales = [ "cs_CZ.UTF-8/UTF-8" ];
+    };
 in
 pkgs.mkShell {
   packages = [
-    tex # also provides texlua, which runs the vendored script/songidx/songidx.lua
-    pkgs.python3 # sort_index.py (--custom-sort)
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-    pkgs.glibcLocales # cs_CZ.UTF-8 for songidx and sort_index.py
+    tex
+    pkgs.python3
+    czechLocale
   ];
 
-  shellHook = pkgs.lib.optionalString pkgs.stdenv.isLinux ''
-    export LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
-  '' + ''
-    # mkShell pins SOURCE_DATE_EPOCH to 1980-01-01, which would end up on the title page
+  shellHook = ''
     unset SOURCE_DATE_EPOCH
+    unset LOCALE_ARCHIVE_2_27
+
+    export LOCALE_ARCHIVE=${czechLocale}/lib/locale/locale-archive
+
+    # Don't inherit the host's individual LC_* settings.
+    unset LC_ADDRESS
+    unset LC_IDENTIFICATION
+    unset LC_MEASUREMENT
+    unset LC_MONETARY
+    unset LC_NAME
+    unset LC_PAPER
+    unset LC_TELEPHONE
+    unset LC_TIME
+    unset LC_NUMERIC
+    unset LC_COLLATE
+    unset LC_MESSAGES
+    unset LC_CTYPE
+    unset LANGUAGE
+
+    export LANG=C.UTF-8
+    export LC_ALL=C.UTF-8
+
     echo "Songbook dev shell — run: ./script/build.sh <a4|a5|all|clean> [options]"
   '';
 }

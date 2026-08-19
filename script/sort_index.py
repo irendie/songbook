@@ -8,15 +8,18 @@ import os
 import re
 import unicodedata
 
-# Locale names differ between Windows and Linux.
-for loc in ("cs_CZ.UTF-8", "cs_CZ", "cs", "Czech"):
+# Locale names differ between Windows, Linux, and NixOS.
+for loc in ("cs_CZ.utf8", "cs_CZ.UTF-8", "cs_CZ", "cs", "Czech"):
     try:
-        locale.setlocale(locale.LC_ALL, loc)
+        locale.setlocale(locale.LC_COLLATE, loc)
         break
     except locale.Error:
         continue
 else:
-    raise SystemExit("Czech locale is not installed (cs_CZ.UTF-8 / cs_CZ / cs).")
+    raise SystemExit(
+        "Czech locale is not installed "
+        "(tried cs_CZ.utf8 / cs_CZ.UTF-8 / cs_CZ / cs / Czech)."
+    )
 
 # Resolve the index relative to this script so the working directory doesn't matter.
 INDEX_PATH = os.path.join(
