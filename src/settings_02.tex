@@ -7,6 +7,11 @@
 % babel package, multilang support
 \usepackage[main=czech,english,russian,latin,croatian,slovak]{babel}
 
+% babel-czech's \uv looks up quote glyphs in OT1, which our fontspec-loaded
+% CMU fonts don't provide in bold/medium, causing "undefined shape" warnings;
+% redefine it to insert the Unicode quote characters directly instead.
+\renewcommand{\uv}[1]{„#1“}
+
 % bookmark package, contents hyperlinks and bookmarks 
 \usepackage{bookmark}
 

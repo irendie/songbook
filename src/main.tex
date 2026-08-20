@@ -47,11 +47,17 @@
 \input{chords_list.tex}
 
 \vfill
+% \hfill-padded \hrule has no stretchable text glue, so it's always
+% reported underfull (badness 10000); this divider is intentional.
+\begingroup
+\hbadness=10001
 \hfill
 \hrule
 \hfill
 \newline
 \newline
+\par
+\endgroup
 
 \input{thanks.tex}
 

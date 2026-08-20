@@ -1,4 +1,8 @@
 ﻿% CHord list section
+% The chord diagrams below are intentionally spaced with \hfill only, which
+% LaTeX always reports as underfull (badness 10000); suppress that noise.
+\begingroup
+\hbadness=10001
 {\centering\sffamily
 % \section* creates a seciton which will not be in numbered and present in Contents
 \section*{Přehled akordů}
@@ -272,3 +276,4 @@
 % \subsection*{Ukulele}
 % }
 % \addcontentsline{toc}{subsection}{Ukulele}
+\endgroup
