@@ -31,7 +31,7 @@ With [Nix](https://nixos.org/download/) installed, everything (TeX Live, `songs`
 nix-shell                    # classic, no experimental features needed
 # or
 nix develop                  # flakes
-./script/build.sh all --custom-sort
+./script/build.sh all
 ```
 
 [direnv](https://direnv.net/) users: `direnv allow` once and the shell activates automatically (see `.envrc`).
@@ -47,7 +47,7 @@ Gives you the same Nix environment on any Windows machine:
 ```powershell
 wsl -d NixOS
 cd /mnt/c/Repos/songbook
-nix-shell --run './script/build.sh all --custom-sort'
+nix-shell --run './script/build.sh all'
 ```
 
 ### C. Docker
@@ -69,7 +69,7 @@ PDFs land in `release/` on the host as usual (the repo is bind-mounted).
 * A LaTeX distribution with **LuaLaTeX** (TeX Live or MiKTeX)
   * `songs` package — the `songidx` index generator itself is vendored in `script/songidx/` (GPL-2, from [songs upstream](https://songs.sourceforge.net/)) and runs via `texlua`, so nothing extra to install
   * `cm-unicode` font package — probably needs to be installed manually; the rest should auto-install (if package auto-installing is enabled in your LaTeX distribution)
-* **Python 3** — only needed for the optional custom Czech index sorting (`--custom-sort`)
+* **Python 3** — only needed for the custom Czech index sorting, which is on by default (`-NoCustomSort` / `--no-custom-sort` to opt out)
   * On Linux/macOS, the `cs_CZ.UTF-8` locale must be installed
 
 ### VS Code
@@ -81,8 +81,8 @@ The workspace ships build tasks (`Terminal → Run Build Task`, Ctrl+Shift+B): A
 All builds are driven by a single parameterized script — `script/build.ps1` (Windows) or `script/build.sh` (Linux/macOS):
 
 ```
-build.ps1 <a4|a5|all|clean> [-Preview] [-NoIndex] [-CustomSort] [-IndexesOnly]
-build.sh  <a4|a5|all|clean> [--preview] [--no-index] [--custom-sort] [--indexes-only]
+build.ps1 <a4|a5|all|clean> [-Preview] [-NoIndex] [-NoCustomSort] [-IndexesOnly]
+build.sh  <a4|a5|all|clean> [--preview] [--no-index] [--no-custom-sort] [--indexes-only]
 ```
 
 | Argument (`.ps1` / `.sh`) | Meaning |
@@ -91,7 +91,7 @@ build.sh  <a4|a5|all|clean> [--preview] [--no-index] [--custom-sort] [--indexes-
 | `clean` | Remove auxiliary build files (`.aux`, `.log`, `.sxd`, ...) from `src/` |
 | `-Preview` / `--preview` | Open the resulting PDF(s) after the build |
 | `-NoIndex` / `--no-index` | Single LuaLaTeX pass, skip song index generation |
-| `-CustomSort` / `--custom-sort` | Post-process the index with `sort_index.py` (proper Czech alphabet sorting, incl. `Ch`) |
+| `-NoCustomSort` / `--no-custom-sort` | Skip the `sort_index.py` post-processing (proper Czech alphabet sorting, incl. `Ch`), which is on by default |
 | `-IndexesOnly` / `--indexes-only` | Stop after generating the index (no final PDF) |
 
 Resulting PDFs are placed in `release/`.
@@ -109,7 +109,7 @@ Linux/macOS:
 
 ```bash
 cd script
-./build.sh a5 --preview --custom-sort
+./build.sh a5 --preview
 ```
 
 ## Project structure

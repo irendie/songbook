@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Core build script for the songbook (Linux/macOS).
-# Usage: ./build.sh <a4|a5|all|clean> [--preview] [--no-index] [--custom-sort] [--indexes-only]
+# Usage: ./build.sh <a4|a5|all|clean> [--preview] [--no-index] [--no-custom-sort] [--indexes-only]
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,10 +18,10 @@ Formats:
   clean           remove auxiliary build files from src/
 
 Options:
-  --preview       open the resulting PDF(s) after the build
-  --no-index      single LuaLaTeX pass, skip index generation
-  --custom-sort   post-process the index with sort_index.py (Czech sorting)
-  --indexes-only  stop after generating the index (no final PDF)
+  --preview         open the resulting PDF(s) after the build
+  --no-index        single LuaLaTeX pass, skip index generation
+  --no-custom-sort  skip sort_index.py post-processing (Czech sorting, on by default)
+  --indexes-only    stop after generating the index (no final PDF)
 EOF
     exit 2
 }
@@ -29,16 +29,16 @@ EOF
 FORMAT=""
 PREVIEW=0
 INDEX=1
-CUSTOM_SORT=0
+CUSTOM_SORT=1
 INDEXES_ONLY=0
 
 for arg in "$@"; do
     case "$arg" in
-        a4|a5|all|clean) FORMAT="$arg" ;;
-        --preview)       PREVIEW=1 ;;
-        --no-index)      INDEX=0 ;;
-        --custom-sort)   CUSTOM_SORT=1 ;;
-        --indexes-only)  INDEXES_ONLY=1 ;;
+        a4|a5|all|clean)  FORMAT="$arg" ;;
+        --preview)        PREVIEW=1 ;;
+        --no-index)       INDEX=0 ;;
+        --no-custom-sort) CUSTOM_SORT=0 ;;
+        --indexes-only)   INDEXES_ONLY=1 ;;
         *) echo "Unknown argument: $arg" >&2; usage ;;
     esac
 done

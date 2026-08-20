@@ -1,7 +1,7 @@
 # Minimal build image for the songbook (LuaLaTeX + songs/songidx + CMU fonts).
 # Build:  docker build -t songbook .
 # Run:    docker run --rm -v "$PWD:/songbook" songbook a4
-#         docker run --rm -v "${PWD}:/songbook" songbook all --custom-sort   (PowerShell)
+#         docker run --rm -v "${PWD}:/songbook" songbook all   (PowerShell)
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install --no-install-recommends -y \

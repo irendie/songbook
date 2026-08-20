@@ -40,4 +40,4 @@ Write-Host ""
 Write-Host "Done. Build the songbook with:" -ForegroundColor Green
 Write-Host "    wsl -d $DistroName"
 Write-Host "    cd /mnt/c/Repos/songbook   # or wherever the repo lives"
-Write-Host "    nix-shell --run './script/build.sh all --custom-sort'"
+Write-Host "    nix-shell --run './script/build.sh all'"

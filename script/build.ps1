@@ -1,5 +1,5 @@
 # Core build script for the songbook (Windows).
-# Usage: build.ps1 <a4|a5|all|clean> [-Preview] [-NoIndex] [-CustomSort] [-IndexesOnly]
+# Usage: build.ps1 <a4|a5|all|clean> [-Preview] [-NoIndex] [-NoCustomSort] [-IndexesOnly]
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
@@ -7,7 +7,7 @@ param(
     [string]$Format,
     [switch]$Preview,      # open the resulting PDF(s) after the build
     [switch]$NoIndex,      # single LuaLaTeX pass, skip index generation
-    [switch]$CustomSort,   # post-process the index with sort_index.py (Czech sorting)
+    [switch]$NoCustomSort, # skip sort_index.py post-processing (Czech sorting), enabled by default
     [switch]$IndexesOnly   # stop after generating the index (no final PDF)
 )
 $ErrorActionPreference = "Stop"
@@ -28,7 +28,7 @@ Formats:
 Options:
   -Preview        open the resulting PDF(s) after the build
   -NoIndex        single LuaLaTeX pass, skip index generation
-  -CustomSort     post-process the index with sort_index.py (Czech sorting)
+  -NoCustomSort   skip sort_index.py post-processing (Czech sorting, on by default)
   -IndexesOnly    stop after generating the index (no final PDF)
 "@
     exit 2
@@ -59,7 +59,7 @@ function Invoke-Build {
             texlua (Join-Path $PSScriptRoot "songidx\songidx.lua") -l cs_CZ mainsongsindex.sxd mainsongsindex.sbx
             if ($LASTEXITCODE -ne 0) { throw "songidx failed for $Job" }
 
-            if ($CustomSort) {
+            if (-not $NoCustomSort) {
                 Write-Host "=== ${Job}: applying custom Czech sort ==="
                 & $Python (Join-Path $PSScriptRoot "sort_index.py")
                 if ($LASTEXITCODE -ne 0) { throw "sort_index.py failed for $Job" }

@@ -20,11 +20,11 @@
             "problemMatcher": []
         },
         {
-            "label": "Build all (custom sort)",
+            "label": "Build all",
             "type": "shell",
-            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" all -CustomSort" },
-            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" all --custom-sort" },
-            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" all --custom-sort" },
+            "windows": { "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/script/build.ps1\" all" },
+            "linux": { "command": "\"${workspaceFolder}/script/build.sh\" all" },
+            "osx": { "command": "\"${workspaceFolder}/script/build.sh\" all" },
             "group": "build",
             "problemMatcher": []
         },
