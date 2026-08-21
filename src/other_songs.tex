@@ -2134,7 +2134,10 @@ a \[D]na pádlo \[Em]polož jí \[A] rů\[D]ži.
 \songcolumns{1}
 {\MultiwordChords
 \beginsong{Křižovatka}[by={Démophobia}, sr={Třetí poloha}]
-\textnote{\gtab{Eb}{6:(x24442):} \gtab{G}{(355433)} \newline{} ↓(↓↓) ↓(↓↓) ↓(↓) }
+% \textnote wraps its argument in a single-line \hbox, so \newline never
+% breaks the line; use two \textnote calls instead to get separate lines.
+\textnote{\gtab{Eb}{6:(x24442):} \gtab{G}{(355433)}}
+\textnote{↓(↓↓) ↓(↓↓) ↓(↓)}
 \beginverse
 \nolyrics{\[Cm] \[Cm]}
 \[Cm]V sedě anebo \[Gm]v leže, \[Fm]stojíc anebo jdouc\[Gm],
